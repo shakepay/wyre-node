@@ -55,8 +55,7 @@ export class WyreClient {
             },
             qs: {
                 timestamp: new Date().getTime()
-            },
-            json: true
+            }
         }
 
         if(requestOptions.method == "GET")
@@ -74,7 +73,7 @@ export class WyreClient {
     private buildSignature(requestOptions: request.UrlOptions & request.CoreOptions): string {
         let url = requestOptions.url + "?" + querystring.stringify(requestOptions.qs)
         if(requestOptions.body)
-            url += JSON.stringify(requestOptions.body)
+            url += requestOptions.body
         return crypto.createHmac("sha256", this.config.secretKey)
             .update(url)
             .digest("hex")

@@ -50,8 +50,7 @@ var WyreClient = (function () {
             },
             qs: {
                 timestamp: new Date().getTime()
-            },
-            json: true
+            }
         };
         if (requestOptions.method == "GET")
             requestOptions.qs = Object.assign(requestOptions.qs, params);
@@ -65,7 +64,7 @@ var WyreClient = (function () {
     WyreClient.prototype.buildSignature = function (requestOptions) {
         var url = requestOptions.url + "?" + querystring.stringify(requestOptions.qs);
         if (requestOptions.body)
-            url += JSON.stringify(requestOptions.body);
+            url += requestOptions.body;
         return crypto.createHmac("sha256", this.config.secretKey)
             .update(url)
             .digest("hex");
